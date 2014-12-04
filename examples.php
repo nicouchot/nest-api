@@ -3,17 +3,17 @@
 require_once('nest.class.php');
 
 // Your Nest username and password.
-$username = 'you@gmail.com';
-$password = 'Something other than 1234 right?';
+$username = 'ghostsmaker@hotmail.com';
+$password = 'antoine';
 
 // The timezone you're in.
 // See http://php.net/manual/en/timezones.php for the possible values.
-date_default_timezone_set('America/Montreal');
+date_default_timezone_set('Europe/Paris');
 
 // Here's how to use this class:
 
 $nest = new Nest($username, $password);
-
+/*
 echo "Location information:\n";
 $locations = $nest->getUserLocations();
 jlog($locations);
@@ -97,11 +97,11 @@ var_dump($success);
 echo "----------\n\n";
 
 sleep(1);
-
+*/
 echo "Device information:\n";
 $infos = $nest->getDeviceInfo();
 jlog($infos);
-echo "----------\n\n";
+/*echo "----------\n\n";
 
 echo "Device schedule:\n";
 // Returns as array, one element for each day of the week for which there has at least one scheduled event.
@@ -118,7 +118,7 @@ echo "----------\n\n";
 echo "Last 10 days energy report:\n";
 $energy_report = $nest->getEnergyLatest();
 jlog($energy_report);
-echo "----------\n\n";
+echo "----------\n\n";*/
 
 /* Helper functions */
 
