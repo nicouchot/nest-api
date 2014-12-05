@@ -1,0 +1,10 @@
+<?php
+    
+// Your Nest username and password.
+$username = 'email';
+$password = 'pass';
+$home_dir = "/home/user/NEST";
+
+// The timezone you're in.
+// See http://php.net/manual/en/timezones.php for the possible values.
+date_default_timezone_set('Europe/Paris');

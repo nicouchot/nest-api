@@ -2,7 +2,42 @@
 //Config
 
 $period = isset($_REQUEST['period'])?$_REQUEST['period']:"";
-    
+
+function getInfosSinceDate($input,$date_min){
+	$infos = array();
+	foreach($input as $date => $value){
+		if($date > $date_min){
+			$infos[$date] = $value;
+		}
+	}
+	return $infos;
+}
+
+function getLastInfos($input){
+	$last_info = null;
+	$last_info_date = 0;
+	foreach($input as $date => $value){
+		if($date > $last_info_date){
+			$last_info_date = $date;
+			$last_info = $value;
+		}
+	}
+	return $value;
+}
+
+//recuperation des données
+$input = json_decode(file_get_contents('stats.json'),true);
+if($period=='complet'){
+	$infos = $input;
+}
+elseif($period=='semaine'){
+	$infos = getInfosSinceDate($input,mktime(0,0,0,date("n"),-7));
+}
+else{
+	$infos = getInfosSinceDate($input,mktime(0,0,0,date("n"),date("j")));
+}
+
+$last = getLastInfos($infos);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -48,8 +83,8 @@ $period = isset($_REQUEST['period'])?$_REQUEST['period']:"";
               <h3 class="masthead-brand">NEST Api</h3>
               <nav>
                 <ul class="nav masthead-nav">
-                  <li <? if($period==""){ echo 'class="active"'; } ?>><a href="/">Journée</a></li>
-                  <li <? if($period=="semaine"){ echo 'class="active"'; } ?>><a href="/?period=semaine">Semaine</a></li>
+                  <li <? if($period==""){ echo 'class="active"'; } ?>><a href="/">Depuis 00h</a></li>
+                  <li <? if($period=="semaine"){ echo 'class="active"'; } ?>><a href="/?period=semaine">7 derniers jours</a></li>
                   <li <? if($period=="complet"){ echo 'class="active"'; } ?>><a href="/?period=complet">Complet</a></li>
                   <!--<li><a href="http://getbootstrap.com/examples/cover/#">Features</a></li>
                   <li><a href="mailto:pro@weberantoine.fr">Contact</a></li>-->
@@ -59,13 +94,17 @@ $period = isset($_REQUEST['period'])?$_REQUEST['period']:"";
           </div>
 
           <div class="inner cover">
+	        <h1 class="cover-heading">Dernier update:</h1>
+            <p class="lead">
+	            Temperature: <?php echo $last['current_state']['temperature']; ?>
+            </p>
             <h1 class="cover-heading">Temperature</h1>
-            <p class="lead"><!--Vous voulez en apprendre plus sur votre matériel nest? Visualisez vos statistiques plus simplement ici!-->
+            <p class="lead">
 	            <div id="temperature1" style="height: 250px;"></div>
             </p>
-             <h1 class="cover-heading">Humidité</h1>
+            <h1 class="cover-heading" onclick='$("#humidity1").toggle();' style='cursor:pointer;' >Humidité</h1>
             <p class="lead">
-	            <div id="humidity1" style="height: 250px;"></div>
+	            <div id="humidity1" style="height: 250px;" style='display:none'></div>
             </p>
             <!--<p class="lead">
               <a href="http://getbootstrap.com/examples/cover/#" class="btn btn-lg btn-default">Learn more</a>
@@ -100,21 +139,6 @@ $period = isset($_REQUEST['period'])?$_REQUEST['period']:"";
 	<script src="/lib/morris.min.js"></script>
 	
 	<script>
-		<?php 
-			//recuperation des données
-			$input = json_decode(file_get_contents('stats.json'),true);
-			if($period=='complet'){
-    			$infos = $input;
-			}
-			elseif($period=='semaine'){
-    			$infos = array_slice($input, -(24*7),null,true);
-			}
-			else{
-    			$infos = array_slice($input, -24,null,true);
-			}
-			
-		?>
-			
 	    new Morris.Line({
 		  // ID of the element in which to draw the chart.
 		  element: 'temperature1',
@@ -136,10 +160,10 @@ $period = isset($_REQUEST['period'])?$_REQUEST['period']:"";
                       }
                       echo "',";
                       if($donnee['current_state']['heat']){
-                          echo " chauffe: '10',";
+                          echo " chauffe: '30',";
                       }
                       else{
-                          echo " chauffe: '0',";
+                          echo " chauffe: null,";
                       }
                       
                       echo" },";
@@ -178,6 +202,6 @@ $period = isset($_REQUEST['period'])?$_REQUEST['period']:"";
 		  labels: ['Humidité']
 		});
 	</script>
-  
+  <!--Vous voulez en apprendre plus sur votre matériel nest? Visualisez vos statistiques plus simplement ici!-->
 
 </body></html>

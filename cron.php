@@ -1,14 +1,7 @@
 <?php
 	
 require_once('nest.class.php');
-
-// Your Nest username and password.
-$username = 'email';
-$password = 'pass';
-
-// The timezone you're in.
-// See http://php.net/manual/en/timezones.php for the possible values.
-date_default_timezone_set('Europe/Paris');
+require_once('config.php');
 
 // Here's how to use this class:
 
@@ -16,7 +9,13 @@ $nest = new Nest($username, $password);
 
 $infos = $nest->getDeviceInfo();
 
-$file = 'stats.json';
+//test du lancement de la cron
+if( getcwd() == $home_dir){
+	$file = 'stats.json';
+}
+else{
+	$file = $home_dir.'/stats.json';
+}
 
 $content = file_get_contents($file);
 $data = json_decode($content,true);
@@ -28,6 +27,6 @@ if(file_put_contents($file,json_encode($data, JSON_PRETTY_PRINT))){
 	echo "Enregistrement OK";
 }
 else{
-	echo "Erreur d'ecriture";
+	echo "Erreur d'écriture";
 }
 
