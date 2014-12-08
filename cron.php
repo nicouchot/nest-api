@@ -9,13 +9,7 @@ $nest = new Nest($username, $password);
 
 $infos = $nest->getDeviceInfo();
 
-//test du lancement de la cron
-if( getcwd() == $home_dir){
-	$file = 'stats.json';
-}
-else{
-	$file = $home_dir.'/stats.json';
-}
+$file = $home_dir.date('Y_m').'.json';
 
 $content = file_get_contents($file);
 $data = json_decode($content,true);
@@ -23,10 +17,11 @@ $data = json_decode($content,true);
 $data[time()] = $infos;
 
 if(file_put_contents($file,json_encode($data, JSON_PRETTY_PRINT))){
-	var_dump($infos);
+	//var_dump($infos);
 	echo "Enregistrement OK";
 }
 else{
+	echo $file;
 	echo "Erreur d'écriture";
 }
 

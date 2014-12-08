@@ -1,9 +1,9 @@
 <?php
     
 // Your Nest username and password.
-$username = 'email';
+$username = 'user';
 $password = 'pass';
-$home_dir = "/home/user/NEST";
+$home_dir = "/home/dir/NEST/stats/";
 
 // The timezone you're in.
 // See http://php.net/manual/en/timezones.php for the possible values.
