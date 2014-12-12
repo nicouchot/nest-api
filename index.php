@@ -229,7 +229,7 @@ if(!$histo){
 				<div class="container">
 					<div class="row">
 						<h2 class="text-center">Humidité</h2>
-						<div id="humididty1" style="height: 350px;"></div>
+						<div id="humidity1" style="height: 350px;"></div>
 					</div>
 				</div>
 			</div>
