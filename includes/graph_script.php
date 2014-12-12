@@ -13,7 +13,7 @@
     		  $max_temp = 0;
     		  
     		 //Remplissage des données de cretes
-			 foreach(&$infos as $date => &$donnee){
+			 foreach($infos as $date => &$donnee){
     			  //recuperation des data
     			  if(is_array($donnee['target']['temperature'])){
 				      $donnee['w'] = $donnee['target']['temperature'][0];
