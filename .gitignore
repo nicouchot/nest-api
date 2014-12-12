@@ -1,2 +1,4 @@
 /stats/*
 /config.php
+.htaccess
+.htpasswd

@@ -1,4 +1,4 @@
-fork de https://github.com/gboudreau/nest-api
+https://github.com/gboudreau/nest-api
 
 Nest Learning Thermostat API
 ============================
