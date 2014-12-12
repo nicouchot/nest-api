@@ -2,8 +2,11 @@ Nest API - Data visualisation
 ============================
 
 Forked from: https://github.com/gboudreau/nest-api
+
 This is a PHP class that will allow you to monitor and control your [Nest Learning Thermostat](http://www.nest.com/), and Nest Protect.
 
+![nest api]
+(http://dl.weberantoine.fr/img/NEST_API.png)
 
 Installation:
 
@@ -18,8 +21,3 @@ Use:
     index.php will show these data in graph with a bootstrap templates for pc/mobile
     wear.php will show your last data, with a Android Wear compatible format
 
-
-![nest api]
-(http://dl.weberantoine.fr/img/NEST_API.png)
-    
-    
