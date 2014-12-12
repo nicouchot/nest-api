@@ -8,25 +8,39 @@
 	  // the chart.
 	  data: [
 		  <?php
+    		  
+    		  $min_temp = 99;
+    		  $max_temp = 0;
+    		  
 			  foreach($infos as $date => $donnee){
-				  echo "{ date: '".date("Y-m-d H:i:s",$date)."',";
-				  echo " degree: '".$donnee['current_state']['temperature']."',";
-				  echo " target: '";
-				  
-				  if(is_array($donnee['target']['temperature'])){
-				      echo $donnee['target']['temperature'][0];
+    			  //recuperation des data
+    			  if(is_array($donnee['target']['temperature'])){
+				      $wanted = $donnee['target']['temperature'][0];
 				  }else{
-    				  echo $donnee['target']['temperature'];
+    				  $wanted = $donnee['target']['temperature'];
                   }
-                  echo "',";
                   if($donnee['current_state']['heat']){
-                      echo " chauffe: '15',";
+                      $heat = "'15'";
                   }
                   else{
-                      echo " chauffe: null,";
+                      $heat = "null";
                   }
-                  
-                  echo" },";
+    			  $mesured = $donnee['current_state']['temperature'];
+    			  
+    			  
+    			  //Remplissage des données de cretes
+    			  if($mesured < $min_temp){
+        			  $min_temp = $mesured;
+    			  }
+    			  if($mesured > $max_temp){
+        			  $max_temp = $mesured;
+    			  }
+    			  
+				  echo "{ date: '".date("Y-m-d H:i:s",$date)."',";
+				  echo " degree: '".$mesured."',";
+				  echo " target: '".$wanted."',";
+                  echo " chauffe: ".$heat.",";
+                  echo " },";
 				
 			  }
 		  ?>
@@ -35,8 +49,8 @@
 	  xkey: 'date',
 	  // A list of names of data record attributes that contain y-values.
 	  ykeys: ['degree','target','chauffe'],
-	  ymin: 15,
-	  ymax: 23,
+	  ymin: <?php echo $min_temp; ?>,
+	  ymax: <?php echo $max_temp; ?>,
 	  pointSize: 0,
 	  postUnits: ' C°',
 	  // Labels for the ykeys -- will be displayed when you hover over the
