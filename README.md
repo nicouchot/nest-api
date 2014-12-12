@@ -13,7 +13,11 @@ Installation:
     git clone https://github.com/TwanoO67/nest-api.git
     cp config.php_example config.php
     vi config.php ( here you have to change password,user and path of your stats folder)
-    crontab -e ( to execute or curl your cron.php script every X minutes to get your fresh stats)
+    crontab -e 
+        ( to execute or curl your cron.php script every X minutes to get your fresh stats
+            Exec: nohup php YOUR_FOLDER/cron.php > /dev/null 2>&1 &
+            CURL: nohup curl http://YOUR_VHOST/cron.php > /dev/null 2>&1 &
+        )
     
 Use:
 
