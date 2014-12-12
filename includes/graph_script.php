@@ -1,3 +1,57 @@
+<?php
+//Preparation des données de graph	  
+$min_temp = 99;
+$max_temp = 0;
+
+$temp_graph_data = "";
+$humi_graph_data = "";
+
+//Remplissage des données de cretes
+foreach($infos as $date => $donnee){
+    //recuperation des data
+    if(is_array($donnee['target']['temperature'])){
+      $wanted = $donnee['target']['temperature'][0];
+    }else{
+      $wanted = $donnee['target']['temperature'];
+    }
+    $mesured = $donnee['current_state']['temperature'];
+    
+    //calcul des valeurs de cretes
+    if($mesured < $min_temp){
+      $min_temp = $mesured;
+    }
+    if($mesured > $max_temp){
+      $max_temp = $mesured;
+    }
+    if($wanted < $min_temp){
+      $min_temp = $wanted;
+    }
+    if($wanted > $max_temp){
+      $max_temp = $wanted;
+    }
+    
+    //construction de l'affichage temp
+    $temp_graph_data .= "{ date: '".date("Y-m-d H:i:s",$date)."',";
+    $temp_graph_data .= " degree: '".$mesured."',";
+    $temp_graph_data .= " target: '".$wanted."',";
+    $temp_graph_data .= " chauffe: ".($donnee['current_state']['heat']?"HEAT_PLACEHOLDER":"null").",";
+    $temp_graph_data .= " },";
+
+    //construction de l'affichage humidity
+    $humi_graph_data .= "{ date: '".date("Y-m-d H:i:s",$date)."', humidity: '".$donnee['current_state']['humidity']."%' },";
+    
+   
+}
+//on coupe au borne haute et basse
+$min_temp = floor($min_temp);
+$max_temp = floor($max_temp)+1;
+
+//remplacement des placeholder
+$temp_graph_data = str_replace('HEAT_PLACEHOLDER', $max_temp, $temp_graph_data);
+
+
+?>
+
 <script>
     new Morris.Line({
 	  // ID of the element in which to draw the chart.
@@ -7,57 +61,7 @@
 	  // Chart data records -- each entry in this array corresponds to a point on
 	  // the chart.
 	  data: [
-		  <?php
-    		  
-    		  $min_temp = 99;
-    		  $max_temp = 0;
-    		  
-    		 //Remplissage des données de cretes
-			 foreach($infos as $date => &$donnee){
-    			  //recuperation des data
-    			  if(is_array($donnee['target']['temperature'])){
-				      $donnee['w'] = $donnee['target']['temperature'][0];
-				  }else{
-    				  $donnee['w'] = $donnee['target']['temperature'];
-                  }
-    			  $donnee['m'] = $donnee['current_state']['temperature'];
-    			  
-    			  if($donnee['m'] < $min_temp){
-        			  $min_temp = $donnee['m'];
-    			  }
-    			  if($donnee['m'] > $max_temp){
-        			  $max_temp = $donnee['m'];
-    			  }
-    			  if($donnee['w'] < $min_temp){
-        			  $min_temp = $donnee['w'];
-    			  }
-    			  if($donnee['w'] > $max_temp){
-        			  $max_temp = $donnee['w'];
-    			  }
-    			   
-    		}
-    		//on coupe au borne haute et basse
-    		$min_temp = floor($min_temp);
-    		$max_temp = floor($max_temp)+1;
-    		
-    		
-    		//Construction de l'affichage
-    		foreach($infos as $date => $donnee){
-                  if($donnee['current_state']['heat']){
-                      $donnee['h'] = "'".$min_temp."'";
-                  }
-                  else{
-                      $donnee['h'] = "null";
-                  }
-    			  
-				  echo "{ date: '".date("Y-m-d H:i:s",$date)."',";
-				  echo " degree: '".$donnee['m']."',";
-				  echo " target: '".$donnee['w']."',";
-                  echo " chauffe: ".$donnee['h'].",";
-                  echo " },";
-				
-			  }
-		  ?>
+		  <?php echo $temp_graph_data; ?>
 	  ],
 	  // The name of the data record attribute that contains x-values.
 	  xkey: 'date',
@@ -80,11 +84,7 @@
 	  // Chart data records -- each entry in this array corresponds to a point on
 	  // the chart.
 	  data: [
-		  <?php 
-			  foreach($infos as $date => $donnee){
-				  echo "{ date: '".date("Y-m-d H:i:s",$date)."', humidity: '".$donnee['current_state']['humidity']."%' },";
-			  }
-		  ?>
+		  <?php echo $humi_graph_data; ?>
 	  ],
 	  // The name of the data record attribute that contains x-values.
 	  xkey: 'date',

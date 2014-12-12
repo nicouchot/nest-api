@@ -83,6 +83,20 @@ if(!$histo){
 		<![endif]-->
 	</head>
 	<body>
+    	<style>
+        	.ligne_grise{
+            	margin-top: 40px;
+                text-align: center;
+                background: #eee;
+        	}
+        	
+        	.ligne_blanche{
+            	margin-top: 40px;
+                text-align: center;
+                /*background: #eee;*/
+        	}
+        </style>
+    	
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
@@ -211,7 +225,16 @@ if(!$histo){
 				</div><!-- /.container -->
 			</div><!-- /.features-menu-->
 			
-			<div class="comments">
+			<div class="ligne_grise">
+				<div class="container">
+					<div class="row">
+						<h2 class="text-center">Humidité</h2>
+						<div id="humididty1" style="height: 350px;"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="ligne_blanche">
 				<div class="container">
 					<div class="row">
 						<h2 class="text-center">Historique disponible</h2>
