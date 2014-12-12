@@ -12,29 +12,43 @@
     		  $min_temp = 99;
     		  $max_temp = 0;
     		  
-			  foreach($infos as $date => $donnee){
+    		 //Remplissage des données de cretes
+			 foreach($infos as $date => &$donnee){
     			  //recuperation des data
     			  if(is_array($donnee['target']['temperature'])){
-				      $wanted = $donnee['target']['temperature'][0];
+				      $donnee['w'] = $donnee['target']['temperature'][0];
 				  }else{
-    				  $wanted = $donnee['target']['temperature'];
+    				  $donnee['w'] = $donnee['target']['temperature'];
                   }
+    			  $donnee['m'] = $donnee['current_state']['temperature'];
+    			  
+    			  if($donnee['m'] < $min_temp){
+        			  $min_temp = $donnee['m'];
+    			  }
+    			  if($donnee['m'] > $max_temp){
+        			  $max_temp = $donnee['m'];
+    			  }
+    			  if($donnee['w'] < $min_temp){
+        			  $min_temp = $donnee['w'];
+    			  }
+    			  if($donnee['w'] > $max_temp){
+        			  $max_temp = $donnee['w'];
+    			  }
+    			   
+    		}
+    		//on coupe au borne haute et basse
+    		$min_temp = floor($min_temp);
+    		$max_temp = floor($max_temp)+1;
+    		
+    		
+    		//Construction de l'affichage
+    		foreach($infos as $date => $donnee){
                   if($donnee['current_state']['heat']){
-                      $heat = "'15'";
+                      $donnee['h'] = "'".$min_temp."'";
                   }
                   else{
-                      $heat = "null";
+                      $donnee['h'] = "null";
                   }
-    			  $mesured = $donnee['current_state']['temperature'];
-    			  
-    			  
-    			  //Remplissage des données de cretes
-    			  if($mesured < $min_temp){
-        			  $min_temp = $mesured;
-    			  }
-    			  if($mesured > $max_temp){
-        			  $max_temp = $mesured;
-    			  }
     			  
 				  echo "{ date: '".date("Y-m-d H:i:s",$date)."',";
 				  echo " degree: '".$mesured."',";
@@ -49,8 +63,8 @@
 	  xkey: 'date',
 	  // A list of names of data record attributes that contain y-values.
 	  ykeys: ['degree','target','chauffe'],
-	  ymin: <?php echo floor($min_temp); ?>,
-	  ymax: <?php echo floor($max_temp)+1; ?>,
+	  ymin: <?php echo $min_temp; ?>,
+	  ymax: <?php echo $max_temp; ?>,
 	  pointSize: 0,
 	  postUnits: ' C°',
 	  // Labels for the ykeys -- will be displayed when you hover over the
