@@ -49,8 +49,8 @@
 	  xkey: 'date',
 	  // A list of names of data record attributes that contain y-values.
 	  ykeys: ['degree','target','chauffe'],
-	  ymin: <?php echo $min_temp; ?>,
-	  ymax: <?php echo $max_temp; ?>,
+	  ymin: <?php echo floor($min_temp); ?>,
+	  ymax: <?php echo floor($max_temp)+1; ?>,
 	  pointSize: 0,
 	  postUnits: ' C°',
 	  // Labels for the ykeys -- will be displayed when you hover over the
