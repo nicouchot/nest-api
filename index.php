@@ -120,7 +120,7 @@ if(!$histo){
 					<div class="row">
 						<div class="col-sm-6">
 							<h1 class="animated fadeInDown delay-1">
-								Redevenez maitre de vos données!
+								Redevenez maitre de vos données !
 							</h1>
 
 							<ul class="labels-menu labels-danger list-unstyled">
@@ -191,10 +191,10 @@ if(!$histo){
 								<i class="fa fa-paper-plane"></i>
 								<h4>Mode absent</h4>
 								<p>
-									<?php if($last['current_state']['manual_away'] == true){
-											echo "Manuel"; }
-										elseif($last['current_state']['auto_away'] == 1){
-											echo "Automatique";	
+									<?php if($last['current_state']['auto_away'] == 1){
+											echo "Automatique"; }
+										elseif($last['current_state']['manual_away'] == true){
+											echo "Manuel";	
 										}
 										else{
 											echo "Eteint";
