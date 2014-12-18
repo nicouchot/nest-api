@@ -33,9 +33,8 @@ foreach($infos as $date => $donnee){
     $temp_graph_data .= " },";
 
     //construction de l'affichage humidity
-    $humi_graph_data .= "{ date: '".date("Y-m-d H:i:s",$date)."', humidity: '".$donnee['current_state']['humidity']."',ext_humidity: '".$external_hum."'  }, ";
+    $humi_graph_data .= "{ date: '".date("Y-m-d H:i:s",$date)."', humidity: ".$donnee['current_state']['humidity'].", ext_humidity: ".$external_hum."  }, ";
     
-   
 }
 //on coupe au borne haute et basse
 $min_temp = floor($min_temp);
