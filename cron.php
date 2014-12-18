@@ -12,12 +12,13 @@ $infos = $nest->getDeviceInfo();
 //ajout de la temperature exterieur
 if(!isset($forecast_localisation)){
     $struct = $nest->getUserLocations();
-    $forecast_localisation = $struct[0]->postal_code;
+    $forecast_localisation = $struct[0]->postal_code.','.$struct[0]->country ;
 }
-$external = $nest->getWeather($forecast_localisation);
-$infos->current_state->outside_temperature = $external->outside_temperature;
-$infos->current_state->outside_humidity = $external->outside_humidity;
-
+if($forecast_localisation != ''){
+    $external = $nest->getWeather($forecast_localisation);
+    $infos->current_state->outside_temperature = $external->outside_temperature;
+    $infos->current_state->outside_humidity = $external->outside_humidity;
+}
 $file = $home_dir.date('Y_m').'.json';
 
 $content = file_get_contents($file);

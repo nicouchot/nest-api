@@ -4,7 +4,6 @@
 $username = 'user';
 $password = 'pass';
 $home_dir = "/home/dir/NEST/stats/";
-$forecast_localisation = "38.492592,-7.668116";
 
 // The timezone you're in.
 // See http://php.net/manual/en/timezones.php for the possible values.
