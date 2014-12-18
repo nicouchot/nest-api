@@ -22,17 +22,13 @@ foreach($infos as $date => $donnee){
     }
     
     //calcul des valeurs de cretes
-    if($mesured < $min_temp){
-      $min_temp = $mesured;
+    $cur_min = min($mesured,$wanted,$external);
+    $cur_max = max($mesured,$wanted,$external);
+    if($cur_min < $min_temp){
+      $min_temp = $cur_min;
     }
-    if($mesured > $max_temp){
-      $max_temp = $mesured;
-    }
-    if($wanted < $min_temp){
-      $min_temp = $wanted;
-    }
-    if($wanted > $max_temp){
-      $max_temp = $wanted;
+    if( $cur_max > $max_temp){
+      $max_temp =  $cur_max;
     }
     
     //construction de l'affichage temp
