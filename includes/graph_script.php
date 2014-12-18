@@ -22,8 +22,8 @@ foreach($infos as $date => $donnee){
     }
     
     //calcul des valeurs de cretes
-    $cur_min = min($mesured,$wanted,$external);
-    $cur_max = max($mesured,$wanted,$external);
+    $cur_min = min($mesured,$wanted,($external=='null'?99:$external));
+    $cur_max = max($mesured,$wanted,($external=='null'?0:$external);
     if($cur_min < $min_temp){
       $min_temp = $cur_min;
     }
