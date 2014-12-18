@@ -10,6 +10,10 @@ $nest = new Nest($username, $password);
 $infos = $nest->getDeviceInfo();
 
 //ajout de la temperature exterieur
+if(!isset($forecast_localisation)){
+    $struct = $nest->getUserLocations();
+    $forecast_localisation = $struct[0]->postal_code;
+}
 $external = $nest->getWeather($forecast_localisation);
 $infos->current_state->outside_temperature = $external->outside_temperature;
 $infos->current_state->outside_humidity = $external->outside_humidity;
