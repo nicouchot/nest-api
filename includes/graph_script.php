@@ -15,6 +15,11 @@ foreach($infos as $date => $donnee){
       $wanted = $donnee['target']['temperature'];
     }
     $mesured = $donnee['current_state']['temperature'];
+    if(isset($donnee['current_state']['outside_temperature'])){
+      $external = $donnee['current_state']['outside_temperature'];
+    }else{
+      $external = "null";
+    }
     
     //calcul des valeurs de cretes
     if($mesured < $min_temp){
@@ -35,6 +40,7 @@ foreach($infos as $date => $donnee){
     $temp_graph_data .= " degree: '".$mesured."',";
     $temp_graph_data .= " target: '".$wanted."',";
     $temp_graph_data .= " chauffe: ".($donnee['current_state']['heat']?"HEAT_PLACEHOLDER":"null").",";
+    $temp_graph_data .= " target: '".$external."',";
     $temp_graph_data .= " },";
 
     //construction de l'affichage humidity
@@ -66,15 +72,15 @@ $temp_graph_data = str_replace('HEAT_PLACEHOLDER', $max_temp, $temp_graph_data);
 	  // The name of the data record attribute that contains x-values.
 	  xkey: 'date',
 	  // A list of names of data record attributes that contain y-values.
-	  ykeys: ['degree','target','chauffe'],
+	  ykeys: ['degree','target','chauffe','external'],
 	  ymin: <?php echo $min_temp; ?>,
 	  ymax: <?php echo $max_temp; ?>,
 	  pointSize: 0,
 	  postUnits: ' C°',
 	  // Labels for the ykeys -- will be displayed when you hover over the
 	  // chart.
-	  labels: ['Degrée','Voulu','Allumé'],
-	  lineColors: ["rgb(11, 98, 164)","rgb(122, 146, 163)",'red']
+	  labels: ['Degrée','Voulu','Allumé',"Extérieur"],
+	  lineColors: ["rgb(11, 98, 164)","rgb(122, 146, 163)",'red','green']
 	});
 	
 	new Morris.Line({
