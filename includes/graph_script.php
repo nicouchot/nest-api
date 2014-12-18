@@ -36,7 +36,7 @@ foreach($infos as $date => $donnee){
     $temp_graph_data .= " degree: '".$mesured."',";
     $temp_graph_data .= " target: '".$wanted."',";
     $temp_graph_data .= " chauffe: ".($donnee['current_state']['heat']?"HEAT_PLACEHOLDER":"null").",";
-    $temp_graph_data .= " external: '".$external."',";
+    $temp_graph_data .= " external: ".$external.",";
     $temp_graph_data .= " },";
 
     //construction de l'affichage humidity
