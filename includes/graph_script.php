@@ -9,17 +9,10 @@ $humi_graph_data = "";
 //Remplissage des données de cretes
 foreach($infos as $date => $donnee){
     //recuperation des data
-    if(is_array($donnee['target']['temperature'])){
-      $wanted = $donnee['target']['temperature'][0];
-    }else{
-      $wanted = $donnee['target']['temperature'];
-    }
+    $wanted = is_array($donnee['target']['temperature'])?$donnee['target']['temperature'][0]:$donnee['target']['temperature'];
     $mesured = $donnee['current_state']['temperature'];
-    if(isset($donnee['current_state']['outside_temperature'])){
-      $external = $donnee['current_state']['outside_temperature'];
-    }else{
-      $external = "null";
-    }
+    $external = isset($donnee['current_state']['outside_temperature'])?$donnee['current_state']['outside_temperature']:"null";
+    $external_hum = isset($donnee['current_state']['outside_humidity'])?$donnee['current_state']['outside_humidity']:"null";
     
     //calcul des valeurs de cretes
     $cur_min = min($mesured,$wanted,($external=='null'?99:$external));
@@ -40,7 +33,7 @@ foreach($infos as $date => $donnee){
     $temp_graph_data .= " },";
 
     //construction de l'affichage humidity
-    $humi_graph_data .= "{ date: '".date("Y-m-d H:i:s",$date)."', humidity: '".$donnee['current_state']['humidity']."%' },";
+    $humi_graph_data .= "{ date: '".date("Y-m-d H:i:s",$date)."', humidity: '".$donnee['current_state']['humidity']."',ext_humidity: '".$external_hum."'  }, ";
     
    
 }
@@ -91,12 +84,13 @@ $temp_graph_data = str_replace('HEAT_PLACEHOLDER', $max_temp, $temp_graph_data);
 	  // The name of the data record attribute that contains x-values.
 	  xkey: 'date',
 	  // A list of names of data record attributes that contain y-values.
-	  ykeys: ['humidity'],
+	  ykeys: ['humidity','ext_humidity'],
 	  postUnits: ' %',
 	  ymin: 39,
 	  pointSize: 0,
 	  // Labels for the ykeys -- will be displayed when you hover over the
 	  // chart.
-	  labels: ['Humidité']
+	  labels: ['Humidité','Humidité Exterieur'],
+	  lineColors: ["rgb(11, 98, 164)",'green']
 	});
 </script>
