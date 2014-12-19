@@ -128,11 +128,11 @@ if(!$histo){
 			</div><!-- /.container -->
 		</nav><!--/.navbar-->
 
-		<div class="wrapper">
-			<div class="home">
+		<div class="wrapper"> 
+			<div class="home" style="padding: 40px 0 40px;">
 				<div class="container">
 					<div class="row">
-						<div class="col-sm-6">
+<!--						<div class="col-sm-6">
 							<h1 class="animated fadeInDown delay-1">
 								Redevenez maitre de vos données !
 							</h1>
@@ -145,13 +145,14 @@ if(!$histo){
 							</ul>
 
 						</div><!--./col-md-6 -->
-						<div class="col-sm-6 presentation">
+						<!--<div class="col-sm-6 presentation">-->
+                            <h2 class="text-center">Températures</h2>
 							<div class="animated slideInRight delay-1">
 								<!--<div class="downloads" id="downloads"><i class="fa fa-download"></i> xx Downloads</div>-->
 								<div id="temperature1" style="height: 350px;"></div>
 								
 							</div>
-						</div><!--./col-md-6 -->
+						<!--<</div><!--./col-md-6 -->
 					</div><!-- /.row -->
 				</div>
 			</div><!-- /.home -->
@@ -164,27 +165,27 @@ if(!$histo){
 			<div class="features-menu">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="col-xs-12 col-sm-6 col-md-2">
 							<div class="feature-item animated fadeInUp delay-3">
 								<i class="fa fa-sun-o"></i>
-								<h4>Température</h4>
+								<h4>Température intérieure</h4>
 								<p>
 									<?php echo $last['current_state']['temperature'].' °C'; ?>
 								</p>
 							</div>
 						</div><!-- /.item -->
 
-						<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="col-xs-12 col-sm-6 col-md-2">
 							<div class="feature-item animated fadeInUp delay-3">
 								<i class="fa fa-cloud"></i>
-								<h4>Humidité</h4>
+								<h4>Humidité intérieure</h4>
 								<p>
 									<?php echo $last['current_state']['humidity'].' %'; ?>
 								</p>
 							</div>
 						</div><!-- /.item -->
 
-						<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="col-xs-12 col-sm-6 col-md-2">
 							<div class="feature-item animated fadeInUp delay-3">
 								<i class="fa fa-line-chart"></i>
 								<h4>Chauffage</h4>
@@ -200,7 +201,7 @@ if(!$histo){
 							</div>
 						</div><!-- /.item -->
 						
-						<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="col-xs-12 col-sm-6 col-md-2">
 							<div class="feature-item animated fadeInUp delay-3">
 								<i class="fa fa-paper-plane"></i>
 								<h4>Mode absent</h4>
@@ -218,7 +219,28 @@ if(!$histo){
 								</p>
 							</div>
 						</div><!-- /.item -->
+						
+						<div class="col-xs-12 col-sm-6 col-md-2">
+							<div class="feature-item animated fadeInUp delay-3">
+								<i class="fa fa-tree"></i>
+								<h4>Température extérieure</h4>
+								<p>
+									<?php echo $last['current_state']['outside_temperature'].' °C'; ?>
+								</p>
+							</div>
+						</div><!-- /.item -->
 
+						<div class="col-xs-12 col-sm-6 col-md-2">
+							<div class="feature-item animated fadeInUp delay-3">
+								<i class="fa fa-umbrella"></i>
+								<h4>Humidité extérieure</h4>
+								<p>
+									<?php echo $last['current_state']['outside_humidity'].' %'; ?>
+									<!-- fa-leaf fa-tree fa-fire fa-place-->
+								</p>
+							</div>
+						</div><!-- /.item -->
+						
 					</div><!-- /.row -->
 
 				
@@ -236,16 +258,16 @@ if(!$histo){
 			
 			<div class="ligne_blanche">
 				<div class="container">
-					<div class="row">
+					<div class="row" style="min-height: 150px;">
 						<h2 class="text-center">Historique disponible</h2>
-						<ul>
+						
 						<?php foreach( scandir($home_dir) as $fichier){
 							if(strpos($fichier,'.json')){
 								$date_histo = str_replace('.json', '', $fichier);
-								echo '<li><a href="/?historique='.$date_histo.'" > Relevé statistique du '.$date_histo.'</a></li>';
+								echo '<a href="/?historique='.$date_histo.'" > Relevé statistique du '.$date_histo.'</a>';
 							}
 						}?>
-						</ul>
+						
 					</div>
 				</div>
 			</div> 

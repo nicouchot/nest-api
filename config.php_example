@@ -5,6 +5,16 @@ $username = 'user';
 $password = 'pass';
 $home_dir = "/home/dir/NEST/stats/";
 
+// empty will set min and max to auto min an max value, use to force value (temp in °C humidity in %)
+$min_temp_conf = '';
+$max_temp_conf = '';
+
+$min_hum_conf = '' ;
+$max_hum_conf = '';
+
+// default heat point will be at max tempereature, use to force your value when heating (in °C) or set to 'min' to use min value
+$heat_temp_conf = '';
+
 // The timezone you're in.
 // See http://php.net/manual/en/timezones.php for the possible values.
 date_default_timezone_set('Europe/Paris');
